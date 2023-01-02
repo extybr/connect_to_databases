@@ -4,7 +4,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class UiForm(object):
     def setup_ui(self, Form):
         Form.setObjectName("Form")
-        Form.resize(1100, 950)
+        Form.resize(1100, 970)
         Form.setWindowTitle("Программа для подключения к различным базам данных")
         Form.setStyleSheet("background-color: rgb(170, 255, 127);")
         Form.setWindowIcon(QtGui.QIcon(QtGui.QPixmap('favicon.ico')))
@@ -165,6 +165,7 @@ class UiForm(object):
         font.setBold(True)
         font.setWeight(75)
         self.pushButton.setFont(font)
+        self.pushButton.setCursor(QtGui.QCursor(QtCore.Qt.UpArrowCursor))
         self.pushButton.setStyleSheet("color: rgb(255, 0, 255);\n"
                                       "background-color: rgb(255, 255, 127);")
         self.pushButton.setObjectName("pushButton")

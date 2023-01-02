@@ -14,14 +14,20 @@ class MyWin(QtWidgets.QWidget, Database):
     def get_data(self) -> None:
         try:
             self.ui.textBrowser.clear()
-            output = '😍'.center(107, '*').split('\t')
+            output = '😍'.center(105, '*').split('\t')
             if self.ui.radioButton.isChecked():
                 if os.path.exists(self.ui.lineEdit_5.displayText()):
                     output = self.read_database_sqllite3(self.ui.lineEdit_5.displayText(),
                                                          self.ui.lineEdit_6.displayText())
                 else:
                     self.ui.textBrowser.append(
-                        '\n\n' + '  База Данных отсутствует  '.center(111, '*'))
+                        '\n\n' + '  База Данных отсутствует  '.center(109, '*'))
+                    files = []
+                    for file in os.listdir(os.getcwd()):
+                        if file.endswith('.db'):
+                            files.append(file)
+                    if len(files) > 0:
+                        self.ui.textBrowser.append(f'\nНо есть эти базы - {files}\n')
             elif self.ui.radioButton_2.isChecked():
                 output = self.read_database_postgresql(self.ui.lineEdit.displayText(),
                                                        int(self.ui.lineEdit_2.displayText()),
