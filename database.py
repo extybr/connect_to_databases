@@ -1,12 +1,15 @@
 
 class Database:
 
-    def read_database_sqllite3(self, db, table) -> str:
+    def read_database_sqllite3(self, db: str, table: str, command: str) -> str:
         import sqlite3
         connect = sqlite3.connect(db, check_same_thread=False)
         cursor = connect.cursor()
         try:
-            data = cursor.execute(f'SELECT * FROM {table}')
+            if len(command) > 0:
+                data = cursor.execute(command)
+            else:
+                data = cursor.execute(f'SELECT * FROM {table}')
             col = [i[0] for i in data.description]
             row = [f'{i}\n\n' for i in data]
             length = f'Число столбцов - {len(col)}, число строк - {len(row)}'
@@ -17,7 +20,8 @@ class Database:
         finally:
             connect.close()
 
-    def read_database_mysql(self, host, port, user, password, db, table):
+    def read_database_mysql(self, host: str, port: int, user: str, password: str, db: str,
+                            table: str, command: str) -> str:
         import pymysql.cursors
         connecting = pymysql.connect(host=host, port=port, user=user, password=password, db=db,
                                      charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
@@ -47,7 +51,10 @@ class Database:
                             table_name.append(k)
                     yield f'\nНазвания таблиц: {table_name}'
                 else:
-                    cursor.execute(f"SELECT * FROM {table}")
+                    if len(command) > 0:
+                        cursor.execute(command)
+                    else:
+                        cursor.execute(f"SELECT * FROM {table}")
                     col = [f'{i[0]}' for i in cursor.description]
                     row = [f'{i}\n\n' for i in cursor]
                     length = f'Число столбцов - {len(col)}, число строк - {len(row)}'
@@ -58,7 +65,8 @@ class Database:
         finally:
             connecting.close()
 
-    def read_database_postgresql(self, host, port, user, password, db, table):
+    def read_database_postgresql(self, host: str, port: int, user: str, password: str, db: str,
+                                 table: str, command: str) -> str:
         from psycopg2 import connect
         from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
         try:
@@ -70,7 +78,10 @@ class Database:
                 server_info = json.dumps(connection.get_dsn_parameters(), indent=4)
                 output = (f"Информация о сервере PostGreSQL:\n{server_info}\n"
                           f"Вы подключены к - {cursor.fetchone()[0]}")
-                cursor.execute(f"SELECT * FROM {table}")
+                if len(command) > 0:
+                    cursor.execute(command)
+                else:
+                    cursor.execute(f"SELECT * FROM {table}")
                 col = [f'{i[0]}' for i in cursor.description]
                 row = [f'{i}\n\n' for i in cursor]
                 length = f'Число столбцов - {len(col)}, число строк - {len(row)}'
