@@ -8,6 +8,9 @@ class Database:
         try:
             if len(command) > 0:
                 data = cursor.execute(command)
+                if command.split()[0].lower() in ['create', 'insert', 'delete', 'drop']:
+                    connect.commit()
+                    yield f'\nКоманда *{command}* выполнена\n'
             else:
                 data = cursor.execute(f'SELECT * FROM {table}')
             col = [i[0] for i in data.description]
@@ -53,6 +56,9 @@ class Database:
                 else:
                     if len(command) > 0:
                         cursor.execute(command)
+                        if command.split()[0].lower() in ['create', 'insert', 'delete', 'drop']:
+                            connecting.commit()
+                            yield f'\nКоманда *{command}* выполнена\n'
                     else:
                         cursor.execute(f"SELECT * FROM {table}")
                     col = [f'{i[0]}' for i in cursor.description]
@@ -80,6 +86,9 @@ class Database:
                           f"Вы подключены к - {cursor.fetchone()[0]}")
                 if len(command) > 0:
                     cursor.execute(command)
+                    if command.split()[0].lower() in ['create', 'insert', 'delete', 'drop']:
+                        connection.commit()
+                        yield f'\nКоманда *{command}* выполнена\n'
                 else:
                     cursor.execute(f"SELECT * FROM {table}")
                 col = [f'{i[0]}' for i in cursor.description]

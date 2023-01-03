@@ -16,7 +16,8 @@ class MyWin(QtWidgets.QWidget, Database):
             self.ui.textBrowser.clear()
             output = '😍'.center(105, '*').split('\t')
             if self.ui.radioButton.isChecked():
-                if os.path.exists(self.ui.lineEdit_5.displayText()):
+                if os.path.exists(self.ui.lineEdit_5.displayText()) or (
+                        self.ui.lineEdit_7.displayText().split(' ')[0].lower() == 'create'):
                     output = self.read_database_sqllite3(self.ui.lineEdit_5.displayText(),
                                                          self.ui.lineEdit_6.displayText(),
                                                          self.ui.lineEdit_7.displayText())
