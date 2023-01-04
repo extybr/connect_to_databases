@@ -44,9 +44,9 @@ class Database:
                 for i in cursor.fetchall():
                     for k in i.values():
                         dbname.append(k)
-                if db not in dbname:
+                if db not in dbname and len(command) == 0:
                     yield f'\nНазвания баз: {dbname}'
-                elif len(table) == 0:
+                elif len(table) == 0 == len(command):
                     table_name = []
                     cursor.execute(f"SHOW TABLES")
                     for i in cursor.fetchall():

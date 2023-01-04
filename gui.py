@@ -86,6 +86,13 @@ class UiForm(object):
         self.lineEdit.setFont(font)
         self.lineEdit.setStyleSheet("background-color: rgb(170, 255, 255);")
         self.lineEdit.setObjectName("lineEdit")
+        """
+        # Валидация по ip адресу
+        regexp = QtCore.QRegExp(r'^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)'
+                                r'(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){0,3}$')
+        validator = QtGui.QRegExpValidator(regexp)
+        self.lineEdit.setValidator(validator)
+        """
         self.gridLayout.addWidget(self.lineEdit, 1, 2, 1, 1)
         self.label_4 = QtWidgets.QLabel(self.groupBox)
         font = QtGui.QFont()
@@ -103,6 +110,7 @@ class UiForm(object):
         self.lineEdit_2.setFont(font)
         self.lineEdit_2.setStyleSheet("background-color: rgb(170, 255, 255);")
         self.lineEdit_2.setObjectName("lineEdit_2")
+        self.lineEdit_2.setValidator(QtGui.QIntValidator(0, 65535))
         self.gridLayout.addWidget(self.lineEdit_2, 1, 3, 1, 1)
         self.radioButton_3 = QtWidgets.QRadioButton(self.groupBox)
         font = QtGui.QFont()
