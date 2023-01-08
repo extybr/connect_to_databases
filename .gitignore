@@ -14,3 +14,4 @@ venv/
 .dockerignore
 *.yml
 Dockerfile
+my_config.py
